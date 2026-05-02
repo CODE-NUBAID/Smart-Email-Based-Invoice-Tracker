@@ -89,7 +89,6 @@ Client Email   Self Reminder
 Notification   Notification
 ```
 
----
 
 ## 🛠️ Tech Stack
 
@@ -98,15 +97,14 @@ Notification   Notification
 * 📊 Google Sheets API
 * ⏰ Cron Scheduler
 
----
+
 
 ## 📊 Data Structure
 
 | DATE       | TYPE | EMAIL                                   | AMOUNT | DueDate | STATUS  |
 | ---------- | ---- | --------------------------------------- | ------ | ------- | ------- |
-| 2026-05-01 | sent | [client@gmail.com](mailto:client@gmail.com) | 0      |         | Pending |
 
----
+
 
 ## ⚙️ Setup Instructions
 
@@ -116,14 +114,10 @@ Notification   Notification
 * Click **Import Workflow**
 * Upload JSON file
 
----
-
 ### 2. Connect Credentials
 
 * Connect Gmail (OAuth2)
 * Connect Google Sheets
-
----
 
 ### 3. Configure Google Sheet
 
@@ -139,7 +133,6 @@ Columns:
 DATE | TYPE | EMAIL | AMOUNT | DueDate | STATUS
 ```
 
----
 
 ### 4. Activate Workflows
 
@@ -174,14 +167,12 @@ client → yourmain
 Subject: Payment Due
 ```
 
----
 
 ### ✔ Test Reminder System
 
 * Run workflow manually
 * Verify reminder emails
 
----
 
 ## ⚠️ Known Limitations
 
@@ -189,8 +180,6 @@ Subject: Payment Due
 * Relies on subject keywords
 * No duplicate email prevention
 * No reminder frequency control
-
----
 
 ## 🔮 Future Improvements
 
@@ -200,8 +189,6 @@ Subject: Payment Due
 * 📊 Dashboard analytics
 * 🔐 Status update automation
 
----
-
 ## 🎯 Learning Outcomes
 
 * Event-driven automation using n8n
@@ -209,9 +196,8 @@ Subject: Payment Due
 * Workflow design using Switch logic
 * Real-world problem solving
 
----
 
 ## 👨‍💻 Author
 
 Your Name  
-GitHub: [https://github.com/yourusername](https://github.com/yourusername)
+GitHub: https://github.com/CODE-NUBAID
