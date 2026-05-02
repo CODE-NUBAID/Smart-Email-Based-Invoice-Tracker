@@ -5,419 +5,166 @@
       "parameters": {
         "pollTimes": {
           "item": [
-            {
-              "mode": "everyMinute"
-            }
+            { "mode": "everyMinute" }
           ]
         },
         "filters": {
-          "labelIds": [
-            "SENT"
-          ],
+          "labelIds": ["SENT"],
           "q": "subject:(invoice OR payment)"
         }
       },
-      "id": "5d88b865-3b0e-4087-ac40-a67ee354ed8e",
       "name": "Sent Emails Trigger",
       "type": "n8n-nodes-base.gmailTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        96,
-        288
-      ],
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ztM6VxlqWSas1KJO",
-          "name": "Gmail account"
-        }
-      }
+      "typeVersion": 1,
+      "position": [100, 300],
+      "credentials": {}
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
-            {
-              "id": "1",
-              "name": "Direction",
-              "value": "OUTGOING",
-              "type": "string"
-            },
-            {
-              "id": "2",
-              "name": "Email",
-              "value": "={{ $json.to }}",
-              "type": "string"
-            },
-            {
-              "id": "3",
-              "name": "Subject",
-              "value": "={{ $json.subject }}",
-              "type": "string"
-            },
-            {
-              "id": "4",
-              "name": "Status",
-              "value": "Pending",
-              "type": "string"
-            },
-            {
-              "id": "5",
-              "name": "Date",
-              "value": "={{ $json.date }}",
-              "type": "string"
-            }
+            { "name": "Direction", "value": "OUTGOING", "type": "string" },
+            { "name": "EMAIL", "value": "={{ $json.to }}", "type": "string" },
+            { "name": "Subject", "value": "={{ $json.subject }}", "type": "string" },
+            { "name": "STATUS", "value": "Pending", "type": "string" },
+            { "name": "DATE", "value": "={{ $json.date }}", "type": "string" },
+            { "name": "AMOUNT", "value": "0", "type": "string" },
+            { "name": "DueDate", "value": "", "type": "string" }
           ]
-        },
-        "options": {}
+        }
       },
-      "id": "c1ded246-c130-4a87-bd21-ffdbb8edd6b2",
       "name": "Extract Sent Email Data",
       "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        320,
-        288
-      ]
+      "typeVersion": 3,
+      "position": [320, 300]
     },
     {
       "parameters": {
         "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8",
-          "mode": "list",
-          "cachedResultName": "InvoiceTrackerTest",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8/edit#gid=0"
-        },
+        "documentId": "",
+        "sheetName": "Sheet1",
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "DATE": "={{$json[\"date\"]}}",
+            "DATE": "={{$json.DATE}}",
             "TYPE": "sent",
-            "EMAIL": "={{$json[\"ClientEmail\"]}}",
-            "AMOUNT": "={{$json[\"Amount\"]}}",
-            "DueDate": "={{$json[\"DueDate\"]}}",
-            "STATUS": "={{$json[\"Status\"]}}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "DATE",
-              "displayName": "DATE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TYPE",
-              "displayName": "TYPE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "EMAIL",
-              "displayName": "EMAIL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "AMOUNT",
-              "displayName": "AMOUNT",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "DueDate",
-              "displayName": "DueDate",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "STATUS",
-              "displayName": "STATUS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "id": "eafd47de-efe6-4d47-8b6b-c691d6b13513",
-      "name": "Save to Google Sheets",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        544,
-        288
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "FnzwJmABgwvE6tLN",
-          "name": "Google Sheets account"
+            "EMAIL": "={{$json.EMAIL}}",
+            "AMOUNT": "={{$json.AMOUNT}}",
+            "DueDate": "={{$json.DueDate}}",
+            "STATUS": "={{$json.STATUS}}"
+          }
         }
-      }
+      },
+      "name": "Save Sent to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [540, 300],
+      "credentials": {}
     },
     {
       "parameters": {
         "pollTimes": {
           "item": [
-            {
-              "mode": "everyMinute"
-            }
+            { "mode": "everyMinute" }
           ]
         },
         "filters": {
-          "labelIds": [
-            "INBOX"
-          ],
+          "labelIds": ["INBOX"],
           "q": "subject:(invoice OR payment)",
           "readStatus": "unread"
         }
       },
-      "id": "8f15f587-ea62-494d-8b0d-1cd585528481",
       "name": "Incoming Emails Trigger",
       "type": "n8n-nodes-base.gmailTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        96,
-        512
-      ],
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ztM6VxlqWSas1KJO",
-          "name": "Gmail account"
-        }
-      }
+      "typeVersion": 1,
+      "position": [100, 520],
+      "credentials": {}
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
-            {
-              "id": "1",
-              "name": "Direction",
-              "value": "INCOMING",
-              "type": "string"
-            },
-            {
-              "id": "2",
-              "name": "Email",
-              "value": "={{ $json.from }}",
-              "type": "string"
-            },
-            {
-              "id": "3",
-              "name": "Subject",
-              "value": "={{ $json.subject }}",
-              "type": "string"
-            },
-            {
-              "id": "4",
-              "name": "Status",
-              "value": "Received",
-              "type": "string"
-            },
-            {
-              "id": "5",
-              "name": "Date",
-              "value": "={{ $json.date }}",
-              "type": "string"
-            }
+            { "name": "Direction", "value": "INCOMING", "type": "string" },
+            { "name": "EMAIL", "value": "={{ $json.from }}", "type": "string" },
+            { "name": "Subject", "value": "={{ $json.subject }}", "type": "string" },
+            { "name": "STATUS", "value": "Pending", "type": "string" },
+            { "name": "DATE", "value": "={{ $json.date }}", "type": "string" },
+            { "name": "AMOUNT", "value": "0", "type": "string" },
+            { "name": "DueDate", "value": "", "type": "string" }
           ]
-        },
-        "options": {}
+        }
       },
-      "id": "fc5acb21-0052-4fa9-929b-068347448251",
       "name": "Extract Incoming Email Data",
       "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        320,
-        512
-      ]
+      "typeVersion": 3,
+      "position": [320, 520]
     },
     {
       "parameters": {
         "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8",
-          "mode": "list",
-          "cachedResultName": "InvoiceTrackerTest",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8/edit#gid=0"
-        },
+        "documentId": "",
+        "sheetName": "Sheet1",
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "DATE": "={{$now}}",
-            "TYPE": "=Received",
-            "EMAIL": "={{$json[\"SenderEmail\"]}}",
-            "AMOUNT": "={{$json[\"Amount\"]}}",
-            "DueDate": "={{$json[\"DueDate\"]}}",
-            "STATUS": "={{$json[\"Status\"]}}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "DATE",
-              "displayName": "DATE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TYPE",
-              "displayName": "TYPE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "EMAIL",
-              "displayName": "EMAIL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "AMOUNT",
-              "displayName": "AMOUNT",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "DueDate",
-              "displayName": "DueDate",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "STATUS",
-              "displayName": "STATUS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "id": "687e0613-e9cb-46d7-8309-59c1bb1b21c8",
-      "name": "Save to Google Sheets 1",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        544,
-        512
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "FnzwJmABgwvE6tLN",
-          "name": "Google Sheets account"
+            "DATE": "={{$json.DATE}}",
+            "TYPE": "received",
+            "EMAIL": "={{$json.EMAIL}}",
+            "AMOUNT": "={{$json.AMOUNT}}",
+            "DueDate": "={{$json.DueDate}}",
+            "STATUS": "={{$json.STATUS}}"
+          }
         }
-      }
+      },
+      "name": "Save Incoming to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [540, 520],
+      "credentials": {}
     },
     {
       "parameters": {
         "rule": {
           "interval": [
+            { "triggerAtHour": 9 }
+          ]
+        }
+      },
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [100, 820]
+    },
+    {
+      "parameters": {
+        "documentId": "",
+        "sheetName": "Sheet1"
+      },
+      "name": "Read Invoices",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [320, 820],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
             {
-              "triggerAtHour": 9
+              "leftValue": "={{$json.STATUS}}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
             }
           ]
         }
       },
-      "id": "bb248722-1bd8-4fd2-bc76-45f4e0ba64a7",
-      "name": "Daily Schedule",
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        96,
-        832
-      ]
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8",
-          "mode": "list",
-          "cachedResultName": "InvoiceTrackerTest",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NKINZ9dODVlITUmFTtzurXMY_mbfjQXUFC67ItXApl8/edit#gid=0"
-        },
-        "options": {}
-      },
-      "id": "ca53ed15-f063-4129-bed3-5a84c6837b46",
-      "name": "Read Pending Invoices",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        320,
-        832
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "FnzwJmABgwvE6tLN",
-          "name": "Google Sheets account"
-        }
-      }
+      "name": "Filter Pending",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 820]
     },
     {
       "parameters": {
@@ -425,12 +172,6 @@
           "values": [
             {
               "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
                 "conditions": [
                   {
                     "leftValue": "={{ $json.Direction }}",
@@ -438,23 +179,13 @@
                     "operator": {
                       "type": "string",
                       "operation": "equals"
-                    },
-                    "id": "55974285-956a-47da-b386-55f6dfe9de67"
+                    }
                   }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Outgoing"
+                ]
+              }
             },
             {
               "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
                 "conditions": [
                   {
                     "leftValue": "={{ $json.Direction }}",
@@ -462,286 +193,101 @@
                     "operator": {
                       "type": "string",
                       "operation": "equals"
-                    },
-                    "id": "1f0a33a7-14ef-46b5-a335-5b53ed1ae779"
+                    }
                   }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Incoming"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "8e533320-b5a0-48ea-8331-d924bb4059fb",
-      "name": "Route by Direction",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.4,
-      "position": [
-        768,
-        832
-      ]
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $json.EMAIL }}",
-        "subject": "Reminder: Pending Invoice",
-        "emailType": "text",
-        "message": "Hello, this is a friendly reminder regarding your pending invoice. Please let us know if you have any questions.",
-        "options": {}
-      },
-      "id": "2dff65b5-e73f-4731-8c99-512a0d78af89",
-      "name": "Send Reminder to Client",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        992,
-        736
-      ],
-      "webhookId": "d7b6c81b-bc34-49a3-90dd-19dd2980ae20",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ztM6VxlqWSas1KJO",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "buildwithnew@gmail.com",
-        "subject": "Invoice Reminder Sent",
-        "message": "=A reminder was sent to client: {{ $(\"Send Reminder to Client\").item.json.EMAIL }}",
-        "options": {}
-      },
-      "id": "690d8be3-8f93-44f4-a8bb-50125687f48e",
-      "name": "Notify Me - Client Reminder Sent",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        1216,
-        736
-      ],
-      "webhookId": "3a8f11a1-2a7c-4597-9495-9032fc6bfe6c",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ztM6VxlqWSas1KJO",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "buildwithnew@gmail.com",
-        "subject": "=Action Required: {{ $json.Subject }}",
-        "message": "=You have a pending invoice from: {{ $json.EMAIL }}",
-        "options": {}
-      },
-      "id": "d007804a-747c-4b54-b6a7-f2c4e92f1392",
-      "name": "Send Reminder to Me",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        992,
-        928
-      ],
-      "webhookId": "dc7876db-fbb2-421f-8ac3-aabae608e034",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ztM6VxlqWSas1KJO",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "buildwithnew@gmail.com",
-        "subject": "Invoice Action Reminder Sent",
-        "message": "=A reminder was sent to you regarding invoice from: {{ $(\"Send Reminder to Me\").item.json.EMAIL }}",
-        "options": {}
-      },
-      "id": "99c69aab-ef66-4a86-9b9c-5a9002cbadad",
-      "name": "Notify Me - Self Reminder Sent",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        1216,
-        928
-      ],
-      "webhookId": "3b2db3dd-a2d0-4f68-9f14-2b859c100619",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ztM6VxlqWSas1KJO",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "6d2c47b7-67e5-428a-b2e0-5d41dca1e2e8",
-              "leftValue": "={{$json[\"STATUS\"]}}",
-              "rightValue": "Pending",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                ]
               }
             }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+          ]
+        }
       },
-      "id": "933cf68a-8e73-4fd1-8637-b4753f043d41",
-      "name": "Filter Pending Status",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        544,
-        832
-      ]
+      "name": "Route by Direction",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [760, 820]
+    },
+    {
+      "parameters": {
+        "sendTo": "client@example.com",
+        "subject": "Reminder: Pending Invoice",
+        "message": "This is a reminder for your pending invoice."
+      },
+      "name": "Send Reminder to Client",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [1000, 740],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "sendTo": "your-email@example.com",
+        "subject": "Invoice Reminder Sent",
+        "message": "Reminder sent to client."
+      },
+      "name": "Notify Me (Client)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [1220, 740],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "sendTo": "your-email@example.com",
+        "subject": "Pending Invoice Alert",
+        "message": "You have a pending invoice."
+      },
+      "name": "Send Reminder to Me",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [1000, 920],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "sendTo": "your-email@example.com",
+        "subject": "Self Reminder Sent",
+        "message": "Reminder sent to you."
+      },
+      "name": "Notify Me (Self)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [1220, 920],
+      "credentials": {}
     }
   ],
-  "pinData": {},
   "connections": {
     "Sent Emails Trigger": {
-      "main": [
-        [
-          {
-            "node": "Extract Sent Email Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Extract Sent Email Data", "type": "main" }]]
     },
     "Extract Sent Email Data": {
-      "main": [
-        [
-          {
-            "node": "Save to Google Sheets",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Save Sent to Google Sheets", "type": "main" }]]
     },
     "Incoming Emails Trigger": {
-      "main": [
-        [
-          {
-            "node": "Extract Incoming Email Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Extract Incoming Email Data", "type": "main" }]]
     },
     "Extract Incoming Email Data": {
-      "main": [
-        [
-          {
-            "node": "Save to Google Sheets 1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Save Incoming to Google Sheets", "type": "main" }]]
     },
     "Daily Schedule": {
-      "main": [
-        [
-          {
-            "node": "Read Pending Invoices",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Read Invoices", "type": "main" }]]
     },
-    "Read Pending Invoices": {
-      "main": [
-        [
-          {
-            "node": "Filter Pending Status",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+    "Read Invoices": {
+      "main": [[{ "node": "Filter Pending", "type": "main" }]]
+    },
+    "Filter Pending": {
+      "main": [[{ "node": "Route by Direction", "type": "main" }]]
     },
     "Route by Direction": {
       "main": [
-        [
-          {
-            "node": "Send Reminder to Client",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send Reminder to Me",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        [{ "node": "Send Reminder to Client", "type": "main" }],
+        [{ "node": "Send Reminder to Me", "type": "main" }]
       ]
     },
     "Send Reminder to Client": {
-      "main": [
-        [
-          {
-            "node": "Notify Me - Client Reminder Sent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Notify Me (Client)", "type": "main" }]]
     },
     "Send Reminder to Me": {
-      "main": [
-        [
-          {
-            "node": "Notify Me - Self Reminder Sent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Filter Pending Status": {
-      "main": [
-        [
-          {
-            "node": "Route by Direction",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Notify Me (Self)", "type": "main" }]]
     }
-  },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "binaryMode": "separate"
-  },
-  "versionId": "0e6dd1d5-7be7-477b-8cb0-745bfacd6482",
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "5c7ab947b7166b4ca5281b7927cd7d3b1a40c3a2b1e106142b6fecd52c87934e"
-  },
-  "id": "ElO0jSDvDkLsjw7Z",
-  "tags": []
+  }
 }
